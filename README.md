@@ -1,5 +1,4 @@
 **Movie Ticket Booking System (MERN Stack)**
-Movie Ticket Booking System
 
 **Table of Contents**
 Introduction

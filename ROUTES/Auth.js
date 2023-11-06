@@ -1,9 +1,9 @@
 const express = require('express');
 const router = express.Router();
 const User = require('../Models/UserSchema');
-// const jwt = require('jsonwebtoken');
+const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
-// const nodemailer = require('nodemailer');
+const nodemailer = require('nodemailer');
 
 router.get("/test",(req,res)=>{
     res.json({

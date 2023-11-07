@@ -10,7 +10,8 @@ const authRoutes = require('./ROUTES/Auth');
 const adminRoutes = require('./ROUTES/Admin');
 const movieRoutes = require('./ROUTES/Movie');
 const imageuploadRoutes = require('./ROUTES/imageUploadRoutes');
-
+app.use(bodyParser.json());
+app.use(cookieParser());
 app.use('/auth', authRoutes);
 
 app.get("/",(req,res)=>{

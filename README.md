@@ -14,7 +14,7 @@
   <li>License<br><br></li>
 </ul>
 
-<h2>Introduction<br>
+<h2>Introduction</h2>
 <p>The Movie Ticket Booking System is a web application developed using the MERN (MongoDB, Express, React, Node.js) stack. It allows users to browse movies, view showtimes, and book tickets for their preferred movies. This README provides an overview of the project, its features, and instructions on how to set it up and use it.</p>
 
 <h2>**Features**</h2>

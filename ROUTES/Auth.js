@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const User = require('../Models/UserSchema');
+const authTokenHandler = require('../Middlewares/checkAuthToken');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const nodemailer = require('nodemailer');
@@ -10,6 +11,15 @@ router.get("/test", (req, res) => {
         message: "This API is working"
     })
 })
+
+function createResponse(ok, message, data) {
+    return {
+        ok,
+        message,
+        data,
+    };
+}
+
 
 router.post("/register", async (req, res,next) => {
     try {
@@ -73,8 +83,50 @@ router.post('/login', async (req, res, next) => {
         authToken,
         refreshToken
     })
+});
+
+
+router.get('/checklogin', authTokenHandler, async (req, res) => {
+    res.json({
+        userId: req.userId,
+        ok: true,
+        message: 'User authenticated successfully'
+    })
 })
 
 
+router.get('/logout', authTokenHandler, async (req, res) => {
+    res.clearCookie('authToken');
+    res.clearCookie('refreshToken');
+    res.json({
+        ok: true,
+        message: 'User logged out successfully'
+    })
+})
+
+router.get('/getuser', authTokenHandler, async (req, res) => {
+    const user = await User.findOne({ _id: req.userId });
+
+    if (!user) {
+        return res.status(400).json(createResponse(false, 'Invalid credentials'));
+    }
+    else{
+        return res.status(200).json(createResponse(true, 'User found', user));
+    }
+})
+
+router.post('/changeCity', authTokenHandler, async (req, res, next) => {
+    const { location } = req.body;
+    const user = await User.findOne({ _id: req.userId });
+
+    if (!user) {
+        return res.status(400).json(createResponse(false, 'Invalid credentials'));
+    }
+    else{
+        user.location = location;
+        await user.save();
+        return res.status(200).json(createResponse(true, 'location changed successfully'));
+    }
+})
 
 module.exports = router;

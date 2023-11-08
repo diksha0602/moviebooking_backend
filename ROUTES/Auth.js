@@ -11,10 +11,10 @@ router.get("/test", (req, res) => {
     })
 })
 
-router.post("/register", async (req, res) => {
+router.post("/register", async (req, res,next) => {
     try {
-        const { name, email, password } = req.body;
-        const euser = await User.findOne({ email: email });
+        const {name,email,password,bookings,location} = req.body;
+        const euser = await User.findOne({email});
 
         if (euser) {
             res.status(409).json({
@@ -22,31 +22,26 @@ router.post("/register", async (req, res) => {
             });
         }
         else {
-            bcrypt.hash(req.body.password, 8, function (err, hash) {
+                const salt  =  await bcrypt.genSalt(10);
+                const hashedpass = await bcrypt.hash(password,salt);
+            
                 const newUser = new User({
                     name,
-                    password:hash,
+                    password:hashedpass,
                     email,
                     location,
                 });
-                newUser.save(function (err) {
-                    if (err) {
-                        console.log(err);
-                    }
-                    else {
-                        res.status(201).json({
-                            message: "New User created Successfully"
-                        });
-                    }
-                });
-            })
+
+                newUser.save();
+                res.status(201).json({
+                    message:"New User Created"
+                })
 
         }
     }
     catch (err) {
-        next(err);
+        console.log(err);
     }
-
 })
 
 router.post('/login', async (req, res, next) => {

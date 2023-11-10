@@ -12,13 +12,19 @@ const movieRoutes = require('./ROUTES/Movie');
 const imageuploadRoutes = require('./ROUTES/imageUploadRoutes');
 app.use(bodyParser.json());
 app.use(cookieParser());
+
+
 app.use('/auth', authRoutes);
+app.use("/admin", adminRoutes);
+app.use('/movie', movieRoutes);
+
+
 
 app.get("/", (req, res) => {
   res.json("The Backend is working");
 });
 
-app.use("/admin", adminRoutes);
+
 
 app.listen(PORT, (req, res) => {
   console.log(`Server is running on port ${PORT}`);

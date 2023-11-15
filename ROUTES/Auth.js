@@ -94,6 +94,19 @@ router.get('/checklogin', authTokenHandler, async (req, res) => {
     })
 })
 
+router.post('/changeCity', authTokenHandler, async (req, res, next) => {
+    const { city } = req.body;
+    const user = await User.findOne({ _id: req.userId });
+
+    if (!user) {
+        return res.status(400).json(createResponse(false, 'Invalid credentials'));
+    }
+    else{
+        user.city = city;
+        await user.save();
+        return res.status(200).json(createResponse(true, 'City changed successfully'));
+    }
+})
 
 router.get('/logout', authTokenHandler, async (req, res) => {
     res.clearCookie('authToken');
@@ -128,5 +141,7 @@ router.post('/changeCity', authTokenHandler, async (req, res, next) => {
         return res.status(200).json(createResponse(true, 'location changed successfully'));
     }
 })
+
+
 
 module.exports = router;

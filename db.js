@@ -6,7 +6,7 @@ try{
         dbName : process.env.DB_NAME
     })
 
-    console.log("Connected to Databse");
+    console.log("Connected to Database");
 }
 catch(err){
     console.log("Not Connected"+err);

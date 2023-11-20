@@ -366,10 +366,12 @@ router.get('/getuserbookings' , authTokenHandler , async (req , res , next) => {
         //     bookings.push(bookingobj);
         // })
 
-        for(let i = 0 ; i < user.bookings.length ; i++){
-            let bookingobj = await Booking.findById(user.bookings[i]._id);
-            bookings.push(bookingobj);
-        }
+        for (let i = 0; i < user.bookings.length; i++) {
+    
+             const bookingObj = await Booking.findById(user.bookings[i]._id);
+            bookings.push(bookingObj);
+            
+          }
 
         res.status(200).json(createResponse(true, 'User bookings retrieved successfully', bookings));
         // res.status(200).json(createResponse(true, 'User bookings retrieved successfully', user.bookings));

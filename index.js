@@ -13,7 +13,7 @@ const imageuploadRoutes = require("./ROUTES/imageUploadRoutes");
 app.use(bodyParser.json());
 app.use(cookieParser());
 
-const allowedOrigins = ['http://localhost:3000','http://localhost:3001',"https://moviefrontenddeployment.vercel.app/"]; // Add more origins as needed
+const allowedOrigins = ['http://localhost:3000','http://localhost:3001',"https://movie-booking-frontend-ecid.vercel.app/"]; // Add more origins as needed
 app.use(
   cors({
     origin: function (origin, callback) {
